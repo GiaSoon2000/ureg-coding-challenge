@@ -1,0 +1,5 @@
+Flask==2.2.5
+Flask-Cors==3.0.10
+Flask-SQLAlchemy==3.0.3
+pytest==7.3.2
+Werkzeug<3.0.0
