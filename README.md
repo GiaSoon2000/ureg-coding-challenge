@@ -66,31 +66,3 @@ cd frontend
 npm run build
 # built files appear in frontend/dist
 ```
-
-Repository / GitHub quick publish (suggested)
-1. Initialize git (if not already):
-```powershell
-git init
-git add .
-git commit -m "U-Reg coding challenge: initial fullstack with sqlite, tailwind, docker, tests"
-```
-2. Create GitHub repo and push
-```powershell
-git branch -M main
-git remote add origin https://github.com/<your-username>/ureg-coding-challenge.git
-git push -u origin main
-```
-
-Suggested README additions before pushing
-- Add 1-2 screenshots in `docs/` or `assets/` and reference them in this README (e.g. `docs/screenshot-1.png`).
-- Add the coding-challenge gist link near the top (already included above) to show you followed the spec.
-
-Recommended commit message
-```
-U-Reg coding challenge: initial fullstack with sqlite, tailwind, docker, tests
-```
-
-Notes and troubleshooting
-- If Docker build hangs while installing OS packages, check network, or run `docker compose build --progress=plain backend` to see apt output.
-- `docker compose` in recent Docker CLI ignores the top-level `version` key in `docker-compose.yml` (we removed it to avoid warnings).
-- The backend currently runs Flask's development server inside the container for convenience. For production use, run via `gunicorn` or another WSGI server.
