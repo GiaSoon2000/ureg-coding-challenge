@@ -44,10 +44,14 @@ def get_rates_by_date(date=None):
                 # datetime.fromisoformat can parse YYYY-MM-DD
                 date_filter = datetime.fromisoformat(date).date()
             except Exception:
-                raise ValueError("date must be in YYYY-MM-DD format")
+                # Invalid date format — return empty rates for that date
+                return {"date": date, "rates": []}
     else:
         latest = db.session.query(func.max(Rate.effective_date)).scalar()
         date_filter = latest
+        if not date_filter:
+            # No rates in database
+            return {"date": None, "rates": []}
 
     rows = db.session.query(Rate, Currency).join(
         Currency, Currency.id == Rate.target_currency_id
@@ -68,11 +72,8 @@ def get_rates_by_date(date=None):
 @app.route("/rates", methods=["GET"])
 def rates():
     date = request.args.get("date")  # YYYY-MM-DD
-    try:
-        result = get_rates_by_date(date)
-        return jsonify(result)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    result = get_rates_by_date(date)
+    return jsonify(result), 200
 
 # Serve frontend static (when built)
 @app.route("/", defaults={"path": ""})
